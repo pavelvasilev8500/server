@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-shadow */
-/* eslint-disable no-console */
 const experss = require('express');
 const mongoose = require('mongoose');
 
@@ -12,6 +9,7 @@ const ifaces = require('os').networkInterfaces();
 const Data = require('./models/dataModel');
 const CtcontrolRouter = require('./routes/CtcontrolRouter')(Data);
 const controlData = require('./models/controldataModel');
+const { Console } = require('console');
 const CtsystemRouter = require('./routes/CtsystemRouter')(controlData);
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,11 +19,12 @@ app.use('/api', CtcontrolRouter);
 app.use('/api', CtsystemRouter);
 
 const localhost = Object.keys(ifaces).reduce((host, ifname) => {
-  const iface = ifaces[ifname].find((iface) => !(iface.family !== 'IPv4' || iface.internal !== false));
-  return iface ? iface.address : host;
+    const iface = ifaces[ifname].find((iface) => !(iface.family !== 'IPv4' || iface.internal !== false));
+    return iface ? iface.address : host;
 }, '127.0.0.1');
-const port = process.env.PORT || 8282;
+
+const port = 8282;
 
 app.listen(port, () => {
-  console.log(`Server starting...\nip: ${localhost}\nport: ${port}`);
+    console.log(`Server starting...\nip: ${localhost}\nport: ${port}`);
 });
