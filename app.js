@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const app = experss();
 const bodyParser = require('body-parser');
 
-const db = mongoose.connect('mongodb+srv://admin:******@datacluster.1j5iz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority');
+const db = mongoose.connect('mongodb+srv://admin:44224422@datacluster.1j5iz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority');
 const ifaces = require('os').networkInterfaces();
 const Data = require('./models/dataModel');
 const CtcontrolRouter = require('./routes/CtcontrolRouter')(Data);
