@@ -2,14 +2,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const app = express();
+const config = require('./Configuration/ServerConfiguration');
 const bodyParser = require('body-parser');
 
-const db = mongoose.connect('mongodb+srv://admin:******@datacluster.1j5iz.mongodb.net/CtcontrolDatabase?retryWrites=true&w=majority');
+const db = mongoose.connect(config.uri);
 const ifaces = require('os').networkInterfaces();
-const ClientData = require('./models/ClientData');
-const SystemData = require('./models/SystemData');
-const ClientDataRouter = require('./routes/ClientDataRouter')(ClientData);
-const SystemDataRouter = require('./routes/SystemDataRouter')(SystemData);
+const ClientData = require('./Models/ClientData');
+const SystemData = require('./Models/SystemData');
+const ClientDataRouter = require('./Routes/ClientDataRouter')(ClientData);
+const SystemDataRouter = require('./Routes/SystemDataRouter')(SystemData);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -30,8 +31,8 @@ const localhost = Object.keys(ifaces).reduce((host, ifname) => {
   const iface = ifaces[ifname].find((iface) => !(iface.family !== 'IPv4' || iface.internal !== false));
   return iface ? iface.address : host;
 }, '127.0.0.1');
-const port = process.env.PORT || 8282;
+const port = config.port;
 
 app.listen(port, () => {
-  console.log(`Server starting...\nip: ${localhost}\nport: ${port}`);
+    console.log(`Server starting...\nip: ${localhost}\nport: ${port}`);
 });
