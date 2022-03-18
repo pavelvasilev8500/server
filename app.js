@@ -9,8 +9,10 @@ const db = mongoose.connect(config.uri);
 const ifaces = require('os').networkInterfaces();
 const ClientData = require('./Models/ClientData');
 const SystemData = require('./Models/SystemData');
+const StatusData = require('./Models/StatusModel');
 const ClientDataRouter = require('./Routes/ClientDataRouter')(ClientData);
 const SystemDataRouter = require('./Routes/SystemDataRouter')(SystemData);
+const StatusDataRouter = require('./Routes/StatusDataRouter')(StatusData);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -20,6 +22,7 @@ app.get('/', (req, res) => {
 });
 app.use('/clientdata', ClientDataRouter);
 app.use('/systemdata', SystemDataRouter);
+app.use('/statusdata', StatusDataRouter);
 
 app.use((err, req, res, next) => {
     const status = err.status || 500;
