@@ -49,7 +49,7 @@ function routes(StatusData) {
     StatusDataRouter.route('/:id')
         .delete((req, res) => {
             const query = { _id: req.params.id };
-            SystemData.findByIdAndDelete(query, (err, statusdata) => {
+            StatusData.findByIdAndDelete(query, (err, statusdata) => {
                 if (err) {
                     return res.sendStatus(404);
                 }
