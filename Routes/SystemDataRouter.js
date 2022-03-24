@@ -11,15 +11,9 @@ function routes(SystemData) {
 			});
 		})
         .post((req, res) => {
-            if (typeof (req.body.Shutdown) === 'boolean' &&
-                typeof (req.body.Reset) === 'boolean' &&
-                typeof (req.body.Sleep) === 'boolean') {
-                const systemdata = new SystemData(req.body);
-			    systemdata.save();
-			    res.sendStatus(201);
-            } else {
-                res.sendStatus(400);
-            }
+            const systemdata = new SystemData(req.body);
+			systemdata.save();
+			res.sendStatus(201);
 		});
     SystemDataRouter.use('/:id', (req, res, next) => {
         const query = { _id: req.params.id };
@@ -39,18 +33,12 @@ function routes(SystemData) {
             return res.json(req.systemdata);
         })
         .put((req, res) => {
-            if (typeof (req.body.Shutdown) === 'boolean' &&
-                typeof (req.body.Reset) === 'boolean' &&
-                typeof (req.body.Sleep) === 'boolean') {
-                const { systemdata } = req;
-                systemdata.Shutdown = req.body.Shutdown;
-                systemdata.Reset = req.body.Reset;
-                systemdata.Sleep = req.body.Sleep;
-                systemdata.save();
-                return res.status(200).json(systemdata);
-            } else {
-                res.sendStatus(400);
-            }
+            const { systemdata } = req;
+            systemdata.Shutdown = req.body.Shutdown;
+            systemdata.Reset = req.body.Reset;
+            systemdata.Sleep = req.body.Sleep;
+            systemdata.save();
+            return res.status(200).json(systemdata);
         });
     SystemDataRouter.route('/:id')
         .delete((req, res) => {

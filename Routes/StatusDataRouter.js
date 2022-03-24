@@ -11,13 +11,9 @@ function routes(StatusData) {
             });
         })
         .post((req, res) => {
-            if (typeof (req.body.Status) === 'boolean' ) {
-                const statusdata = new StatusData(req.body);
-                statusdata.save();
-                res.sendStatus(201);
-            } else {
-                res.sendStatus(400);
-            }
+            const statusdata = new StatusData(req.body);
+            statusdata.save();
+            res.sendStatus(201);
         });
     StatusDataRouter.use('/:id', (req, res, next) => {
         const query = { _id: req.params.id };
@@ -37,19 +33,15 @@ function routes(StatusData) {
             return res.json(req.statusdata);
         })
         .put((req, res) => {
-            if (typeof (req.body.Status) === 'boolean' ) {
-                const { statusdata } = req;
-                statusdata.Status = req.body.Status;
-                statusdata.save();
-                return res.status(200).json(statusdata);
-            } else {
-                res.sendStatus(400);
-            }
+            const { statusdata } = req;
+            statusdata.Status = req.body.Status;
+            statusdata.save();
+            return res.status(200).json(statusdata);
         });
     StatusDataRouter.route('/:id')
         .delete((req, res) => {
             const query = { _id: req.params.id };
-            StatusData.findByIdAndDelete(query, (err, statusdata) => {
+            StatusData  .findByIdAndDelete(query, (err, statusdata) => {
                 if (err) {
                     return res.sendStatus(404);
                 }

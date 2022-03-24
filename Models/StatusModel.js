@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 const StatusData = new Schema({
 	_id: { type: String },
 	Status: { type: Boolean },
+	PCType: { type: String }
 },
 	{
 		versionKey: false,

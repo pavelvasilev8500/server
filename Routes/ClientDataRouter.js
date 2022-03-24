@@ -12,19 +12,9 @@ function routes(ClientData) {
             });
         })
         .post((req, res) => {
-            if (typeof (req.body.Date) === 'string' &&
-                typeof (req.body.Time) === 'string' &&
-                typeof (req.body.Day) === 'string' &&
-                typeof (req.body.Worktime) === 'string' &&
-                typeof (req.body.Batary) === 'string' &&
-                typeof (req.body.CpuTemperature) === 'string' &&
-                typeof (req.body.GpuTemperature) === 'string') {
-                const clientdata = new ClientData(req.body);
-                clientdata.save();
-                res.sendStatus(201);
-            } else {
-                res.sendStatus(400);
-            }
+            const clientdata = new ClientData(req.body);
+            clientdata.save();
+            res.sendStatus(201);
         });
     ClientDataRouter.use('/:id', (req, res, next) => {
         const query = { _id: req.params.id };
@@ -44,26 +34,21 @@ function routes(ClientData) {
             return res.json(req.clientdata);
         })
         .put((req, res) => {
-            if (typeof (req.body.Date) === 'string' &&
-                typeof (req.body.Time) === 'string' &&
-                typeof (req.body.Day) === 'string' &&
-                typeof (req.body.Worktime) === 'string' &&
-                typeof (req.body.Batary) === 'string' &&
-                typeof (req.body.CpuTemperature) === 'string' &&
-                typeof (req.body.GpuTemperature) === 'string') {
-                const { clientdata } = req;
-                clientdata.Date = req.body.Date;
-                clientdata.Time = req.body.Time;
-                clientdata.Day = req.body.Day;
-                clientdata.Worktime = req.body.Worktime;
-                clientdata.Batary = req.body.Batary;
-                clientdata.CpuTemperature = req.body.CpuTemperature;
-                clientdata.GpuTemperature = req.body.GpuTemperature;
-                clientdata.save();
-                return res.status(200).json(clientdata);
-            } else {
-                res.sendStatus(400);
-            }
+            const { clientdata } = req;
+            clientdata.DateNumber = req.body.DateNumber;
+            clientdata.DateMonth = req.body.DateMonth;
+            clientdata.DateYear = req.body.DateYear;
+            clientdata.Time = req.body.Time;
+            clientdata.Day = req.body.Day;
+            clientdata.WorktimeDay = req.body.WorktimeDay;
+            clientdata.WorktimeHour = req.body.WorktimeHour;
+            clientdata.WorktimeMinut = req.body.WorktimeMinut;
+            clientdata.WorktimeSecond = req.body.WorktimeSecond;
+            clientdata.Batary = req.body.Batary;
+            clientdata.CpuTemperature = req.body.CpuTemperature;
+            clientdata.GpuTemperature = req.body.GpuTemperature;
+            clientdata.save();
+            return res.status(200).json(clientdata);
         });
     ClientDataRouter.route('/:id')
         .delete((req, res) => {
